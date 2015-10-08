@@ -18,6 +18,11 @@ var SpeedReader = React.createClass({
 , componentWillReceiveProps: function(nextProps) {
     if (!this.props.isPlaying && nextProps.isPlaying)
       this.loop()
+
+    if(this.props.reset !== nextProps.reset) {
+      this.setState(this.getInitialState)
+      this.loop()
+    }
   }
 , componentDidMount: function() {
     this.loop()

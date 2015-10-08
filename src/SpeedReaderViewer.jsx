@@ -7,6 +7,7 @@ var SpeedReaderViewer = React.createClass({
     return {
       inputText: 'Science, what is it all about? Techmology, what is that all about?'
     , isPlaying: true
+    , resetTs: undefined
     , speed: 200
     }
   }
@@ -15,6 +16,12 @@ var SpeedReaderViewer = React.createClass({
   }
 , pause: function() {
     this.setState({isPlaying: false})
+  }
+, reset: function() {
+    this.setState({
+      isPlaying: false
+    , resetTs: new Date().getTime()
+    })
   }
 , render: function() {
     var self = this
@@ -25,12 +32,14 @@ var SpeedReaderViewer = React.createClass({
           speed={this.state.speed}
           isPlaying={this.state.isPlaying}
           hasEndedCallback={this.pause}
+          reset={this.state.resetTs}
           />
 
         <div>
           <button onClick={this.state.isPlaying ?this.pause : this.play}>
             {this.state.isPlaying ? '||' : '>'}
           </button>
+          <button onClick={this.reset}>Reset</button>
         </div>
 
         <textarea
