@@ -9,6 +9,7 @@ var SpeedReaderViewer = React.createClass({
     , isPlaying: true
     , resetTs: undefined
     , speed: 200
+    , chunk: 2
     }
   }
 , play: function() {
@@ -33,6 +34,7 @@ var SpeedReaderViewer = React.createClass({
           isPlaying={this.state.isPlaying}
           hasEndedCallback={this.pause}
           progressCallback={function(x){console.log(x)}}
+          chunk={this.state.chunk}
           reset={this.state.resetTs}
           />
 
