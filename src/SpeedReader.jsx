@@ -15,6 +15,10 @@ var SpeedReader = React.createClass({
     , currentText: words[current]
     }
   }
+, componentWillReceiveProps: function(nextProps) {
+    if (!this.props.isPlaying && nextProps.isPlaying)
+      this.loop()
+  }
 , componentDidMount: function() {
     this.loop()
   }
