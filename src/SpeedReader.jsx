@@ -64,7 +64,7 @@ var SpeedReader = React.createClass({
 
       if (self.props.progressCallback)
         self.props.progressCallback({
-          at: newCurrent
+          at: newCurrent > words.length ? words.length : newCurrent
         , of: words.length
         })
 
