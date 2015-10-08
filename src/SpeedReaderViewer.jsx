@@ -24,8 +24,20 @@ var SpeedReaderViewer = React.createClass({
     , resetTs: new Date().getTime()
     })
   }
+, progress: function(x) {
+    this.setState({progress: x})
+  }
+, progressBar: function(progress) {
+    var chunks = 10
+    var ratio = progress ? progress.at/progress.of : 0
+    var integerPart = Math.floor(ratio *chunks)
+    var progressBar = new Array(integerPart +1).join('#')
+    progressBar += new Array(chunks -integerPart +1).join('_')
+    return '[' +progressBar +']' + (ratio*100).toFixed(0) +'%'
+  }
 , render: function() {
     var self = this
+
     return (
       <div>
         <SpeedReader
@@ -33,10 +45,12 @@ var SpeedReaderViewer = React.createClass({
           speed={this.state.speed}
           isPlaying={this.state.isPlaying}
           hasEndedCallback={this.pause}
-          progressCallback={function(x){console.log(x)}}
+          progressCallback={this.progress}
           chunk={this.state.chunk}
           reset={this.state.resetTs}
           />
+
+        <div>{this.progressBar(this.state.progress)}</div>
 
         <div>
           <button onClick={this.state.isPlaying ?this.pause : this.play}>
