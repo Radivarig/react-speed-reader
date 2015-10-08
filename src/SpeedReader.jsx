@@ -29,7 +29,7 @@ var SpeedReader = React.createClass({
   }
 , loop: function() {
     var self = this
-    
+
     var ms = 60000/this.props.speed
     //mixins: [ reactTimer for safe setTimeout ]
     setTimeout(function() {
@@ -42,6 +42,11 @@ var SpeedReader = React.createClass({
         currentText: words[current]
       , current: ++current
       })
+      if (self.props.progressCallback)
+        self.props.progressCallback({
+          at: current
+        , of: words.length
+       })
 
       if (self.props.isPlaying && current < words.length) {
         self.loop()

@@ -32,6 +32,7 @@ var SpeedReaderViewer = React.createClass({
           speed={this.state.speed}
           isPlaying={this.state.isPlaying}
           hasEndedCallback={this.pause}
+          progressCallback={function(x){console.log(x)}}
           reset={this.state.resetTs}
           />
 
