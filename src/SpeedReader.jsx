@@ -27,6 +27,13 @@ var SpeedReader = React.createClass({
 
     if(this.props.reset !== nextProps.reset) {
       this.setState(this.getInitialState)
+
+      if (this.props.progressCallback)
+        this.props.progressCallback({
+          at: 0
+        , of: this.state.words.length
+        })
+
       this.loop()
     }
   }
