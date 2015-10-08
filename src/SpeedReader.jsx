@@ -14,11 +14,11 @@ var SpeedReader = React.createClass({
   }
 , getInitialState: function() {
     var words = this.props.inputText.split(/\s+/).filter(Boolean)
-    var current = 0
+    var chunk = this.props.chunk
     return {
-      current: current
+      current: -(chunk < words.length ? chunk : words.length)
     , words: words
-    , currentText: words.slice(current, current +this.props.chunk).join(' ')
+    , currentText: words.slice(0, this.props.chunk).join(' ')
     }
   }
 , componentWillReceiveProps: function(nextProps) {
@@ -54,10 +54,13 @@ var SpeedReader = React.createClass({
 
       newCurrent = newCurrent < words.length ? newCurrent : words.length
       current = newCurrent < words.length ? newCurrent : current
-      self.setState({
+
+        self.setState({
         currentText: words.slice(current, current +self.props.chunk).join(' ')
       , current: current
       })
+
+      newCurrent += self.props.chunk
 
       if (self.props.progressCallback)
         self.props.progressCallback({
