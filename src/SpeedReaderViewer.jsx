@@ -38,17 +38,28 @@ var SpeedReaderViewer = React.createClass({
 , render: function() {
     var self = this
 
+    var outputTextAreaStyle = {
+      textAlign: 'center'
+    , height: 300
+    , border: 'solid'
+    }
+
     return (
-      <div>
-        <SpeedReader
-          inputText={this.state.inputText}
-          speed={this.state.speed}
-          isPlaying={this.state.isPlaying}
-          hasEndedCallback={this.pause}
-          progressCallback={this.progress}
-          chunk={this.state.chunk}
-          reset={this.state.resetTs}
-          />
+      <div style={{textAlign: 'center'}}>
+        <div style={outputTextAreaStyle}>
+
+          <div style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>
+            <SpeedReader
+              inputText={this.state.inputText}
+              speed={this.state.speed}
+              isPlaying={this.state.isPlaying}
+              hasEndedCallback={this.pause}
+              progressCallback={this.progress}
+              chunk={this.state.chunk}
+              reset={this.state.resetTs}
+              />
+          </div>
+        </div>
 
         <div>{this.progressBar(this.state.progress)}</div>
 
@@ -59,11 +70,13 @@ var SpeedReaderViewer = React.createClass({
           <button onClick={this.reset}>Reset</button>
         </div>
 
-        <textarea
+        <textarea rows={10} cols={40}
           type="text"
           value={this.state.inputText}
           onChange={function(e){self.setState({inputText: e.target.value})}}
           />
+
+
       </div>
     )
   }
