@@ -47,7 +47,7 @@ var SpeedReader = React.createClass({
 , loop: function() {
     var self = this
     //mixins: [ reactTimer for safe setTimeout ]
-    var ms = 60000/this.props.speed +this.offset
+    var ms = 60000/this.props.speed
     setTimeout(function() {
       if( !self.props.isPlaying ) return
 
