@@ -40,11 +40,11 @@ var SpeedReader = React.createClass({
 , componentDidMount: function() {
     this.loop()
   }
+, offset: 0
 , loop: function() {
     var self = this
-
-    var ms = 60000/this.props.speed
     //mixins: [ reactTimer for safe setTimeout ]
+    var ms = 60000/this.props.speed +this.offset
     setTimeout(function() {
       if( !self.props.isPlaying ) return
 
@@ -56,8 +56,16 @@ var SpeedReader = React.createClass({
       newCurrent = newCurrent < words.length ? newCurrent : words.length
       current = newCurrent < words.length ? newCurrent : current
 
-        self.setState({
-        currentText: words.slice(current, current +chunk).join(' ')
+      var currentTextWords = words.slice(current, current +chunk)
+
+      var currentText = currentTextWords.join(' ')
+
+      if (self.props.offset && self.props.offset.regex.test(currentText))
+        self.offset = (self.props.offset.duration || 1)*ms
+      else self.offset = 0
+
+      self.setState({
+        currentText: currentText
       , current: current
       })
 
@@ -76,7 +84,7 @@ var SpeedReader = React.createClass({
         if (self.props.hasEndedCallback)
           self.props.hasEndedCallback()
       }
-    }, ms)
+    }, ms +this.offset)
   }
 , render: function() {
     return (

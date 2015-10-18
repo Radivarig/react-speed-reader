@@ -57,6 +57,7 @@ var SpeedReaderViewer = React.createClass({
               progressCallback={this.progress}
               chunk={this.state.chunk}
               reset={this.state.resetTs}
+              offset={{regex: /\.|,|\?|!/, duration: 0.5}}
               />
           </div>
         </div>
