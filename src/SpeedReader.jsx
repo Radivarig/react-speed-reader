@@ -13,7 +13,7 @@ var SpeedReader = React.createClass({
     }
   }
 , getInitialState: function() {
-    var words = this.props.inputText.split(/\s+/).filter(Boolean)
+    var words = this.getWords(this.props.inputText)
     var chunk = this.props.chunk
     return {
       current: -(chunk < words.length ? chunk : words.length)
@@ -37,6 +37,9 @@ var SpeedReader = React.createClass({
       this.loop()
     }
   }
+, getWords: function(sentence) {
+    return sentence.split(/\s+/).filter(Boolean)
+  }
 , componentDidMount: function() {
     this.loop()
   }
@@ -58,6 +61,17 @@ var SpeedReader = React.createClass({
 
       var currentTextWords = words.slice(current, current +chunk)
 
+      if(self.props.trim) {
+        for(var i = 0; i < currentTextWords.length; ++i) {
+          var w = currentTextWords[i]
+          if(w.search(self.props.trim.regex) != -1) {
+            var cnt = i +1
+            currentTextWords = currentTextWords.slice(0, cnt)
+            current = self.state.current +cnt
+            break
+          }
+        }
+      }
       var currentText = currentTextWords.join(' ')
 
       if (self.props.offset && self.props.offset.regex.test(currentText))
