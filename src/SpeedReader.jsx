@@ -25,6 +25,11 @@ var SpeedReader = React.createClass({
     if (!this.props.isPlaying && nextProps.isPlaying)
       this.loop()
 
+    if (this.props.setProgress &&
+        this.props.setProgress.timestamp !==
+         nextProps.setProgress.timestamp)
+      this.setProgress(nextProps.setProgress.percent)
+
     if(this.props.reset !== nextProps.reset) {
       this.setState(this.getInitialState)
 
@@ -37,6 +42,13 @@ var SpeedReader = React.createClass({
       this.loop()
     }
   }
+, setProgress: function(x) {
+    var l = this.state.words.length
+    this.setState({current: Math.floor(x*l)})
+    this.offset = 0
+    this.blank = 0
+    this.loop({skip: true})
+  }
 , getWords: function(sentence) {
     return sentence.split(/\s+/).filter(Boolean)
   }
@@ -45,13 +57,12 @@ var SpeedReader = React.createClass({
   }
 , offset: 0
 , blank: 0
-, loop: function() {
+, loop: function(opts={}) {
     var self = this
+    var ms = opts.skip ? 0 : 60000/this.props.speed
     //mixins: [ reactTimer for safe setTimeout ]
-    var ms = 60000/this.props.speed
-
     setTimeout(function() {
-      if( !self.props.isPlaying ) return
+      if( !opts.skip && !self.props.isPlaying ) return
 
       if (self.blank) {
         self.setState({currentText: ''})
@@ -105,7 +116,7 @@ var SpeedReader = React.createClass({
         })
 
       if(currentStart < l) {
-        self.loop()
+        if ( !opts.skip ) self.loop()
       }
       else {
         if (self.props.hasEndedCallback)
