@@ -44,12 +44,20 @@ var SpeedReader = React.createClass({
     this.loop()
   }
 , offset: 0
+, blank: 0
 , loop: function() {
     var self = this
     //mixins: [ reactTimer for safe setTimeout ]
     var ms = 60000/this.props.speed
     setTimeout(function() {
       if( !self.props.isPlaying ) return
+
+      if (self.blank) {
+        self.setState({currentText: ''})
+        self.offset = self.blank -ms
+        self.blank = 0
+        return self.loop()
+      }
 
       var current = self.state.current
       var chunk = self.props.chunk
@@ -77,6 +85,9 @@ var SpeedReader = React.createClass({
       if (self.props.offset && self.props.offset.regex.test(currentText))
         self.offset = (self.props.offset.duration || 1)*ms
       else self.offset = 0
+
+      if (self.props.blank && self.props.blank.regex.test(currentText))
+        self.blank = (self.props.blank.duration || 1)*ms
 
       self.setState({
         currentText: currentText
