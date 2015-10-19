@@ -6,7 +6,7 @@ var SpeedReaderViewer = React.createClass({
   getInitialState: function() {
     return {
       inputText: 'Science, what is it all about? Techmology, what is that all about?'
-    , isPlaying: true
+    , isPlaying: false
     , resetTs: undefined
     , speed: 200
     , chunk: 1
@@ -23,6 +23,21 @@ var SpeedReaderViewer = React.createClass({
       isPlaying: false
     , resetTs: new Date().getTime()
     })
+  }
+, increaseChunk: function() {
+    this.alterChunk(1)
+  }
+, decreaseChunk: function() {
+    this.alterChunk(-1)
+  }
+, alterChunk: function(x) {
+    var chunk = this.clamp(this.state.chunk +x, 1, 4)
+    this.setState({chunk: chunk}, this.reset)
+  }
+, clamp: function(x, min, max) {
+    if(x < min) return min
+    if(x > max) return max
+    return x
   }
 , progress: function(x) {
     this.setState({progress: x})
@@ -68,6 +83,12 @@ var SpeedReaderViewer = React.createClass({
             {this.state.isPlaying ? '||' : '>'}
           </button>
           <button onClick={this.reset}>Reset</button>
+        </div>
+
+        <div>
+          <button onClick={this.decreaseChunk}>-</button>
+          words per flash: {this.state.chunk}
+          <button onClick={this.increaseChunk}>+</button>
         </div>
 
         <textarea rows={10} cols={40}
