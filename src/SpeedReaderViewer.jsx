@@ -84,7 +84,7 @@ var SpeedReaderViewer = React.createClass({
 
         <div>
           <button onClick={this.state.isPlaying ?this.pause : this.play}>
-            {this.state.isPlaying ? '||' : '>'}
+            {this.state.isPlaying ? 'Pause' : 'Play'}
           </button>
           <button onClick={this.reset}>Reset</button>
         </div>
