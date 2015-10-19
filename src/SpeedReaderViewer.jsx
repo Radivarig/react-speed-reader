@@ -9,7 +9,7 @@ var SpeedReaderViewer = React.createClass({
     , isPlaying: true
     , resetTs: undefined
     , speed: 200
-    , chunk: 2
+    , chunk: 1
     }
   }
 , play: function() {
@@ -47,21 +47,18 @@ var SpeedReaderViewer = React.createClass({
     return (
       <div style={{textAlign: 'center'}}>
         <div style={outputTextAreaStyle}>
-
-          <div style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>
-            <SpeedReader
-              inputText={this.state.inputText}
-              speed={this.state.speed}
-              isPlaying={this.state.isPlaying}
-              hasEndedCallback={this.pause}
-              progressCallback={this.progress}
-              chunk={this.state.chunk}
-              reset={this.state.resetTs}
-              trim={{regex: /\.|,|\?|!/}}
-              offset={{regex: /\.|,|\?|!/, duration: 0.5}}
-              blank={{regex: /\.|\?|!/, duration: 0.5}}
-              />
-          </div>
+          <SpeedReader
+            inputText={this.state.inputText}
+            speed={this.state.speed}
+            isPlaying={this.state.isPlaying}
+            hasEndedCallback={this.pause}
+            progressCallback={this.progress}
+            chunk={this.state.chunk}
+            reset={this.state.resetTs}
+            trim={{regex: /\.|,|\?|!/}}
+            offset={{regex: /\.|,|\?|!/, duration: 0.5}}
+            blank={{regex: /\.|\?|!/, duration: 0.5}}
+            />
         </div>
 
         <div>{this.progressBar(this.state.progress)}</div>

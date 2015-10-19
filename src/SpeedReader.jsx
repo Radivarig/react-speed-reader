@@ -116,8 +116,9 @@ var SpeedReader = React.createClass({
     return Math.floor(x.length/4 +1)
   }
 , render: function() {
-    if (this.props.chunk == 1) {
+    var text = this.state.currentText
 
+    if (this.props.chunk == 1) {
       var fixedLeft = {
         position: 'fixed'
       , display: 'inline-block'
@@ -126,23 +127,28 @@ var SpeedReader = React.createClass({
       }
 
       var pivot = this.pivot(this.state.currentText)
-      var text = this.state.currentText.split('')
+      var word = this.state.currentText.split('')
 
-      var pre = text.slice(0, pivot)
-      var mid = text[pivot]
-      var post = text.slice(pivot +1)
+      var pre = word.slice(0, pivot)
+      var mid = word[pivot]
+      var post = word.slice(pivot +1)
 
-      return (
-        <div style={{width: '100%'}}>
+      text =
+        <div style={{width: '100%', height: '100%'}}>
           <span style={fixedLeft}>{pre}</span>
           <span style={{color: this.props.pivotColor}}>{mid}</span>
           <span style={{position: 'fixed'}}>{post}</span>
         </div>
-      )
+    }
+
+    var styleCenter = {
+      position: 'relative'
+    , top: '50%'
+    , transform: 'translateY(-50%)'
     }
 
     return (
-      <div>{this.state.currentText}</div>
+      <div style={styleCenter}>{text}</div>
     )
   }
 
