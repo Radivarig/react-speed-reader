@@ -52,7 +52,7 @@ var SpeedReaderViewer = React.createClass({
     var rect = e.target.getBoundingClientRect()
     var percent = e.clientX -rect.left
     var setProgress = {
-      percent: percent/100
+      percent: percent
     , timestamp: new Date().getTime()
     }
     this.setState({setProgress: setProgress})

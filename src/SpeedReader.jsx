@@ -44,7 +44,7 @@ var SpeedReader = React.createClass({
   }
 , setProgress: function(x) {
     var l = this.state.words.length
-    this.setState({current: Math.floor(x*l)})
+    this.setState({current: Math.floor(x/100*l)})
     this.offset = 0
     this.blank = 0
     this.loop({skip: true})
