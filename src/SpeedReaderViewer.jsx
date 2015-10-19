@@ -30,6 +30,11 @@ var SpeedReaderViewer = React.createClass({
 , decreaseChunk: function() {
     this.alterChunk(-1)
   }
+, setSpeed: function(e) {
+    var v = e.target.value
+    if(isNaN(v)) return
+    this.setState({speed: parseInt(v || 0)}, this.reset)
+  }
 , alterChunk: function(x) {
     var chunk = this.clamp(this.state.chunk +x, 1, 4)
     this.setState({chunk: chunk}, this.reset)
@@ -52,7 +57,6 @@ var SpeedReaderViewer = React.createClass({
   }
 , render: function() {
     var self = this
-
     var outputTextAreaStyle = {
       textAlign: 'center'
     , height: 300
@@ -64,7 +68,7 @@ var SpeedReaderViewer = React.createClass({
         <div style={outputTextAreaStyle}>
           <SpeedReader
             inputText={this.state.inputText}
-            speed={this.state.speed}
+            speed={this.state.speed || this.getInitialState().speed}
             isPlaying={this.state.isPlaying}
             hasEndedCallback={this.pause}
             progressCallback={this.progress}
@@ -89,6 +93,16 @@ var SpeedReaderViewer = React.createClass({
           <button onClick={this.decreaseChunk}>-</button>
           words per flash: {this.state.chunk}
           <button onClick={this.increaseChunk}>+</button>
+        </div>
+
+        <div>
+          <input
+            style={{width: 50, textAlign: 'center'}}
+            value={this.state.speed || ''}
+            placeholder={this.getInitialState().speed}
+            onChange={this.setSpeed}
+            />
+          WPM
         </div>
 
         <textarea rows={10} cols={40}
