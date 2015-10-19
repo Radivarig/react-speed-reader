@@ -15,9 +15,8 @@ var SpeedReader = React.createClass({
   }
 , getInitialState: function() {
     var words = this.getWords(this.props.inputText)
-    var chunk = this.props.chunk
     return {
-      current: -(chunk < words.length ? chunk : words.length)
+      current: 0
     , words: words
     , currentText: words.slice(0, this.props.chunk).join(' ')
     }
@@ -50,6 +49,7 @@ var SpeedReader = React.createClass({
     var self = this
     //mixins: [ reactTimer for safe setTimeout ]
     var ms = 60000/this.props.speed
+
     setTimeout(function() {
       if( !self.props.isPlaying ) return
 
@@ -60,15 +60,16 @@ var SpeedReader = React.createClass({
         return self.loop()
       }
 
-      var current = self.state.current
+      var oldCurrent = self.state.current
       var chunk = self.props.chunk
-      var newCurrent = current +chunk
       var words = self.state.words
+      var l = words.length
 
-      newCurrent = newCurrent < words.length ? newCurrent : words.length
-      current = newCurrent < words.length ? newCurrent : current
+      var current = oldCurrent +chunk
+      if (current > l) current = l
 
-      var currentTextWords = words.slice(current, current +chunk)
+      var currentStart = current -(chunk < l ? chunk : l)
+      var currentTextWords = words.slice(currentStart, current)
 
       if(self.props.trim) {
         for(var i = 0; i < currentTextWords.length; ++i) {
@@ -95,15 +96,15 @@ var SpeedReader = React.createClass({
       , current: current
       })
 
-      newCurrent += chunk
+      currentStart += chunk
 
       if (self.props.progressCallback)
         self.props.progressCallback({
-          at: newCurrent > words.length ? words.length : newCurrent
-        , of: words.length
+          at: currentStart > l ? l : currentStart
+        , of: l
         })
 
-      if(newCurrent < words.length) {
+      if(currentStart < l) {
         self.loop()
       }
       else {
