@@ -10,6 +10,7 @@ var SpeedReaderViewer = React.createClass({
     , resetTs: undefined
     , speed: 200
     , chunk: 1
+    , setProgress: {percent: 0, timestamp: undefined}
     }
   }
 , play: function() {
@@ -47,13 +48,25 @@ var SpeedReaderViewer = React.createClass({
 , progress: function(x) {
     this.setState({progress: x})
   }
+, setProgress: function(e) {
+    var rect = e.target.getBoundingClientRect()
+    var percent = e.clientX -rect.left
+    var setProgress = {
+      percent: percent/100
+    , timestamp: new Date().getTime()
+    }
+    this.setState({setProgress: setProgress})
+  }
 , progressBar: function(progress) {
     var chunks = 10
     var ratio = progress ? progress.at/progress.of : 0
     var integerPart = Math.floor(ratio *chunks)
     var progressBar = new Array(integerPart +1).join('#')
     progressBar += new Array(chunks -integerPart +1).join('_')
-    return '[' +progressBar +']' + (ratio*100).toFixed(0) +'%'
+    return {
+      bar: '[' +progressBar +']'
+    , percent: (ratio*100).toFixed(0) +'%'
+    }
   }
 , render: function() {
     var self = this
@@ -62,6 +75,7 @@ var SpeedReaderViewer = React.createClass({
     , height: 150
     }
 
+    var progressBar = this.progressBar(this.state.progress)
     return (
       <div style={{textAlign: 'center'}}>
         <div style={outputTextAreaStyle}>
@@ -69,6 +83,7 @@ var SpeedReaderViewer = React.createClass({
             inputText={this.state.inputText}
             speed={this.state.speed || this.getInitialState().speed}
             isPlaying={this.state.isPlaying}
+            setProgress={this.state.setProgress}
             hasEndedCallback={this.pause}
             progressCallback={this.progress}
             chunk={this.state.chunk}
@@ -79,7 +94,10 @@ var SpeedReaderViewer = React.createClass({
             />
         </div>
 
-        <div>{this.progressBar(this.state.progress)}</div>
+        <div>
+          <span onClick={this.setProgress}>{progressBar.bar}</span>
+          <span style={{position: 'fixed', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
+        </div>
 
         <div>
           <button onClick={this.state.isPlaying ?this.pause : this.play}>
