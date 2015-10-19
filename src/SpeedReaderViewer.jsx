@@ -59,8 +59,7 @@ var SpeedReaderViewer = React.createClass({
     var self = this
     var outputTextAreaStyle = {
       textAlign: 'center'
-    , height: 300
-    , border: 'solid'
+    , height: 150
     }
 
     return (
