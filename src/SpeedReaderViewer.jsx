@@ -48,11 +48,18 @@ var SpeedReaderViewer = React.createClass({
 , progress: function(x) {
     this.setState({progress: x})
   }
-, setProgress: function(e) {
+, setProgressPercent: function(e) {
     var rect = e.target.getBoundingClientRect()
     var percent = e.clientX -rect.left
     var setProgress = {
       percent: percent
+    , timestamp: new Date().getTime()
+    }
+    this.setState({setProgress: setProgress})
+  }
+, setProgressSkipFor: function(x) {
+    var setProgress = {
+      skipFor: x
     , timestamp: new Date().getTime()
     }
     this.setState({setProgress: setProgress})
@@ -95,7 +102,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <span onClick={this.setProgress}>{progressBar.bar}</span>
+          <span onClick={this.setProgressPercent}>{progressBar.bar}</span>
           <span style={{position: 'fixed', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
