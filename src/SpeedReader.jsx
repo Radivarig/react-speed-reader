@@ -52,6 +52,8 @@ var SpeedReader = React.createClass({
     }
     else if (setProgress.percent) {
       var percent = setProgress.percent
+      if (percent < 0) percent = 0
+      if (percent > 100) percent = 100
       this.setState({current: Math.floor(percent/100*l)})
     }
     else return
