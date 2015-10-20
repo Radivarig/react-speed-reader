@@ -84,13 +84,10 @@ var SpeedReader = React.createClass({
         return self.loop()
       }
 
-      var oldCurrent = self.state.current
       var chunk = self.props.chunk
+      var current = self.state.current +chunk
       var words = self.state.words
       var l = words.length
-
-      var current = oldCurrent +chunk
-      if (current > l) current = l
 
       var currentStart = current -(chunk < l ? chunk : l)
       var currentTextWords = words.slice(currentStart, current)
