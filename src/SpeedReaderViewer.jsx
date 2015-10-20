@@ -5,12 +5,12 @@ var SpeedReader = require('./SpeedReader.jsx')
 var SpeedReaderViewer = React.createClass({
   getInitialState: function() {
     return {
-      inputText: 'Science, what is it all about? Techmology, what is that all about?'
+      inputText: 'Science, what is it all about?\nTechmology, what is that all about?'
     , isPlaying: false
     , resetTs: undefined
-    , speed: 200
+    , speed: 250
     , chunk: 1
-    , setProgress: {percent: 0, timestamp: undefined}
+    , setProgress: {timestamp: undefined}
     }
   }
 , play: function() {
@@ -37,7 +37,7 @@ var SpeedReaderViewer = React.createClass({
     this.setState({speed: parseInt(v || 0)}, this.reset)
   }
 , alterChunk: function(x) {
-    var chunk = this.clamp(this.state.chunk +x, 1, 4)
+    var chunk = this.clamp(this.state.chunk +x, 1, 3)
     this.setState({chunk: chunk}, this.reset)
   }
 , clamp: function(x, min, max) {
