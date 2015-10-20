@@ -145,7 +145,7 @@ var SpeedReader = React.createClass({
 
     if (this.props.chunk == 1) {
       var fixedLeft = {
-        position: 'fixed'
+        position: 'absolute'
       , display: 'inline-block'
       , transform: 'translate(-100%)'
       , textAlign: 'right'
@@ -162,7 +162,7 @@ var SpeedReader = React.createClass({
         <div style={{width: '100%', height: '100%'}}>
           <span style={fixedLeft}>{pre}</span>
           <span style={{color: this.props.pivotColor}}>{mid}</span>
-          <span style={{position: 'fixed'}}>{post}</span>
+          <span style={{position: 'absolute'}}>{post}</span>
         </div>
     }
 

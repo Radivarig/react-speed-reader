@@ -103,7 +103,7 @@ var SpeedReaderViewer = React.createClass({
 
         <div>
           <span onClick={this.setProgressPercent}>{progressBar.bar}</span>
-          <span style={{position: 'fixed', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
+          <span style={{position: 'absolute', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
         <div>
