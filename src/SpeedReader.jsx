@@ -135,7 +135,7 @@ var SpeedReader = React.createClass({
     }, ms +this.offset)
   }
 , pivot: function(x) {
-    return Math.floor(x.length/4 +1)
+    return (x.length != 1) ? Math.floor(x.length/7 +1) : 0
   }
 , render: function() {
     var text = this.state.currentText
