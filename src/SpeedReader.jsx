@@ -159,7 +159,7 @@ var SpeedReader = React.createClass({
       var post = word.slice(pivot +1)
 
       text =
-        <div style={{width: '100%', height: '100%'}}>
+        <div>
           <span style={fixedLeft}>{pre}</span>
           <span style={{color: this.props.pivotColor}}>{mid}</span>
           <span style={{position: 'absolute'}}>{post}</span>
