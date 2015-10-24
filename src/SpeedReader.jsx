@@ -1,7 +1,9 @@
 var React = require('react')
+var TimerMixin = require('react-timer-mixin')
 
 var SpeedReader = React.createClass({
-  propTypes: {
+  mixins: [ TimerMixin ]
+, propTypes: {
     inputText: React.PropTypes.string.isRequired
   , isPlaying: React.PropTypes.bool.isRequired
   , speed: React.PropTypes.number.isRequired
@@ -73,8 +75,7 @@ var SpeedReader = React.createClass({
 , loop: function(opts={}) {
     var self = this
     var ms = opts.skip ? 0 : 60000/this.props.speed
-    //mixins: [ reactTimer for safe setTimeout ]
-    setTimeout(function() {
+    this.setTimeout(function() {
       if( !opts.skip && !self.props.isPlaying ) return
 
       if (self.blank) {
