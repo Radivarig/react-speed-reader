@@ -72,10 +72,12 @@ var SpeedReader = React.createClass({
   }
 , offset: 0
 , blank: 0
+, lastLoopId: undefined
 , loop: function(opts={}) {
     var self = this
     var ms = opts.skip ? 0 : 60000/this.props.speed
-    this.setTimeout(function() {
+    clearTimeout(this.lastLoopId)
+    this.lastLoopId = this.setTimeout(function() {
       if( !opts.skip && !self.props.isPlaying ) return
 
       if (self.blank) {
