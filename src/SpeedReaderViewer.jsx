@@ -31,6 +31,9 @@ var SpeedReaderViewer = React.createClass({
 , decreaseChunk: function() {
     this.alterChunk(-1)
   }
+, setInputText: function(e) {
+    this.setState({inputText: e.target.value}, this.reset)
+  }
 , setSpeed: function(e) {
     var v = e.target.value
     if(isNaN(v)) return
@@ -132,7 +135,7 @@ var SpeedReaderViewer = React.createClass({
         <textarea rows={10} cols={40}
           type="text"
           value={this.state.inputText}
-          onChange={function(e){self.setState({inputText: e.target.value})}}
+          onChange={this.setInputText}
           />
 
 
