@@ -51,14 +51,17 @@ var SpeedReaderViewer = React.createClass({
 , progress: function(x) {
     this.setState({progress: x})
   }
+, dragTarget: undefined
 , setProgressPercent: function(e) {
-    var rect = e.target.getBoundingClientRect()
-    var percent = e.clientX -rect.left
-    var setProgress = {
-      percent: percent
-    , timestamp: new Date().getTime()
+    if (this.dragTarget) {
+      var rect = this.dragTarget.getBoundingClientRect()
+      var percent = e.clientX -rect.left
+      var setProgress = {
+        percent: percent
+      , timestamp: new Date().getTime()
+      }
+      this.setState({setProgress: setProgress})
     }
-    this.setState({setProgress: setProgress})
   }
 , setProgressSkipFor: function(x) {
     var setProgress = {
@@ -76,6 +79,17 @@ var SpeedReaderViewer = React.createClass({
     return {
       bar: '[' +progressBar +']'
     , percent: (ratio*100).toFixed(0) +'%'
+    }
+  }
+, componentDidMount: function() {
+    document.addEventListener('mousemove', this.setProgressPercent)
+    document.addEventListener('click', this.setDragTarget(false))
+  }
+, setDragTarget: function(start){
+    var self = this
+    return function(e){
+      self.dragTarget = start ? e.target : undefined
+      self.setProgressPercent(e)
     }
   }
 , render: function() {
@@ -108,7 +122,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <span onClick={this.setProgressPercent}>{progressBar.bar}</span>
+          <span onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
           <span style={{position: 'absolute', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
@@ -140,7 +154,6 @@ var SpeedReaderViewer = React.createClass({
           value={this.state.inputText}
           onChange={this.setInputText}
           />
-
 
       </div>
     )
