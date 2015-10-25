@@ -117,7 +117,7 @@ var SpeedReaderViewer = React.createClass({
             trim={{regex: /\.|,|\?|!/}}
             offset={{regex: /\.|,|\?|!/, duration: 0.5}}
             blank={{regex: /\.|\?|!/, duration: 0.5}}
-            cls={undefined/*add className*/}
+
             />
         </div>
 

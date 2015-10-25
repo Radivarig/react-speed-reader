@@ -182,9 +182,8 @@ var SpeedReader = React.createClass({
           text : this.getWordParts(this.state.currentText)
       )
 
-    var cls = this.props.cls || ''
     return (
-      <div className={cls} style={styleCenter}>{text}</div>
+      <div style={styleCenter}>{text}</div>
     )
   }
 
