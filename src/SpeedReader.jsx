@@ -95,7 +95,7 @@ var SpeedReader = React.createClass({
       if( !opts.skip && !self.props.isPlaying ) return
 
       if (self.blank) {
-        self.setState({currentText: ''})
+        self.setState({currentText: '', pre: '', mid: '', post: ''})
         self.offset = self.blank -ms
         self.blank = 0
         return self.loop()
