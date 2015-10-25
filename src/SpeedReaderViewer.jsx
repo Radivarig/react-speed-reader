@@ -205,7 +205,7 @@ var SpeedReaderViewer = React.createClass({
           />
 
         <div style={{margin: 5, color: 'grey'}}>
-          <div>[<strong>Space</strong>] : play / pause</div>
+          <div>[<strong>Space</strong>] : play / pause [<strong>Ctrl + Left</strong>] : reset</div>
           <div>[<strong>Left / Right</strong>] : skip backward / forward 3 words</div>
           <div>[<strong>Up / Down</strong>] : increase / decrease speed for 10 WPM</div>
         </div>
