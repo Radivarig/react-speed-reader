@@ -35,8 +35,8 @@ var SpeedReaderViewer = React.createClass({
     this.setState({inputText: e.target.value}, this.reset)
   }
 , setSpeed: function(e) {
-    var v = e.target.value
-    if(isNaN(v)) return
+    var v = e.target ? e.target.value : e
+    if(isNaN(v) || v < 0) return
     this.setState({speed: parseInt(v || 0)}, this.reset)
   }
 , alterChunk: function(x) {
@@ -84,8 +84,29 @@ var SpeedReaderViewer = React.createClass({
 , componentDidMount: function() {
     document.addEventListener('mousemove', this.setProgressPercent)
     document.addEventListener('click', this.setDragTarget(false))
+    document.addEventListener('keydown', this.handleShortcuts)
   }
-, setDragTarget: function(start){
+, handleShortcuts: function(e) {
+    var skipFor = 3
+    var chgSpeed = 10
+
+    if(e.keyCode == '32')   //space
+      this.setState({isPlaying: !this.state.isPlaying})
+
+    if(e.keyCode == '37') { //left
+      if (e.ctrlKey) this.reset()
+      else this.setProgressSkipFor(-skipFor)
+    }
+    if(e.keyCode == '39')   //right
+      this.setProgressSkipFor(skipFor)
+
+    if(e.keyCode == '38')   //up
+      this.setSpeed(this.state.speed +chgSpeed)
+
+    if(e.keyCode == '40')   //down
+      this.setSpeed(this.state.speed -chgSpeed)
+  }
+, setDragTarget: function(start) {
     window.getSelection().removeAllRanges()
     var self = this
     return function(e){
@@ -176,9 +197,16 @@ var SpeedReaderViewer = React.createClass({
           onChange={this.setInputText}
           />
 
+        <div style={{margin: 5, color: 'grey'}}>
+          <div>[<strong>Space</strong>] : play / pause</div>
+          <div>[<strong>Left / Right</strong>] : skip backward / forward 3 words</div>
+          <div>[<strong>Up / Down</strong>] : increase / decrease speed for 10 WPM</div>
+        </div>
+
       </div>
     )
   }
 })
 
 module.exports = SpeedReaderViewer
+ 
