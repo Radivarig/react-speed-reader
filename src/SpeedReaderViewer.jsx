@@ -5,7 +5,7 @@ var SpeedReader = require('./SpeedReader.jsx')
 var SpeedReaderViewer = React.createClass({
   getInitialState: function() {
     return {
-      inputText: 'Science, what is it all about?\nTechmology, what is that all about?'
+      inputText: 'Science, what is it all about?\nTechmology, what is that all about?\nIs it good?\nIs it wacked?\nIs it good, is it wacked?\nWhat is it all about?\n'
     , isPlaying: false
     , resetTs: undefined
     , speed: 250
