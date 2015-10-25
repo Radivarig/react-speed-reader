@@ -84,8 +84,13 @@ var SpeedReaderViewer = React.createClass({
   }
 , componentDidMount: function() {
     document.addEventListener('mousemove', this.setProgressPercent)
-    document.addEventListener('click', this.setDragTarget(false))
+    document.addEventListener('click', this.removeDragTarget)
     document.addEventListener('keydown', this.handleShortcuts)
+  }
+, componentWillUnmount: function() {
+    document.removeEventListener('mousemove', this.setProgressPercent)
+    document.removeEventListener('click', this.removeDragTarget)
+    document.removeEventListener('keydown', this.handleShortcuts)
   }
 , handleShortcuts: function(e) {
     if (document.activeElement.tagName !== 'BODY') return
@@ -109,12 +114,12 @@ var SpeedReaderViewer = React.createClass({
     if(e.keyCode == '40')   //down
       this.setSpeed(this.state.speed -chgSpeed)
   }
-, setDragTarget: function(start) {
-    var self = this
-    return function(e){
-      self.dragTarget = start ? e.target : undefined
-      self.setProgressPercent(e)
-    }
+, removeDragTarget: function() {
+    this.dragTarget = undefined
+  }
+, setDragTarget: function(e) {
+    this.dragTarget = e.target
+    this.setProgressPercent(e)
   }
 , render: function() {
     var self = this
@@ -166,7 +171,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <span style={{cursor: 'col-resize'}} onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
+          <span style={{cursor: 'col-resize'}} onMouseDown={this.setDragTarget}>{progressBar.bar}</span>
           <span style={{position: 'absolute', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
