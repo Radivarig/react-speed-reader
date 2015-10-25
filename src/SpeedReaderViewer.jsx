@@ -97,6 +97,7 @@ var SpeedReaderViewer = React.createClass({
     var self = this
     var outputTextAreaStyle = {
       textAlign: 'center'
+    , fontSize: '200%'
     , height: 150
     }
 
@@ -118,7 +119,6 @@ var SpeedReaderViewer = React.createClass({
             trim={{regex: /\.|,|\?|!/}}
             offset={{regex: /\.|,|\?|!/, duration: 0.5}}
             blank={{regex: /\.|\?|!/, duration: 0.5}}
-
             />
         </div>
 
