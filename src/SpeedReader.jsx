@@ -51,7 +51,7 @@ var SpeedReader = React.createClass({
     if (setProgress.skipFor) {
       var current = this.state.current +setProgress.skipFor
       if (current < 0) current = 0
-      if (current > l) current = l
+      if (current >= l) current = l -1
       this.setState({current: current})
     }
     else if (setProgress.percent) {
@@ -64,7 +64,7 @@ var SpeedReader = React.createClass({
 
     this.offset = 0
     this.blank = 0
-    this.loop({skip: true, skipPercent: percent == 0})
+    this.loop({skip: true, skipPercent: percent == 0 || current == 0})
   }
 , getWords: function(sentence) {
     return sentence.split(/\s+/).filter(Boolean)
