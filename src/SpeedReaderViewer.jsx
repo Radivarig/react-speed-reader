@@ -86,6 +86,7 @@ var SpeedReaderViewer = React.createClass({
     document.addEventListener('click', this.setDragTarget(false))
   }
 , setDragTarget: function(start){
+    window.getSelection().removeAllRanges()
     var self = this
     return function(e){
       self.dragTarget = start ? e.target : undefined
@@ -122,7 +123,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <span style={{userSelect: 'none'}} onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
+          <span onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
           <span style={{position: 'absolute', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
