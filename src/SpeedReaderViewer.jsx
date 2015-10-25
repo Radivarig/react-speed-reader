@@ -54,6 +54,7 @@ var SpeedReaderViewer = React.createClass({
 , dragTarget: undefined
 , setProgressPercent: function(e) {
     if (this.dragTarget) {
+      window.getSelection().removeAllRanges()
       var rect = this.dragTarget.getBoundingClientRect()
       var percent = (e.clientX -rect.left)*100/rect.width
       var setProgress = {
@@ -107,7 +108,6 @@ var SpeedReaderViewer = React.createClass({
       this.setSpeed(this.state.speed -chgSpeed)
   }
 , setDragTarget: function(start) {
-    window.getSelection().removeAllRanges()
     var self = this
     return function(e){
       self.dragTarget = start ? e.target : undefined
