@@ -109,7 +109,7 @@ var SpeedReaderViewer = React.createClass({
     , borderRightStyle: 'none'
     , position: 'relative'
     , top: '50%'
-    , transform: 'translateY(-50%)'
+    , transform: 'translateY(-51%)' // -1% for snap to pixel..
     }
 
     var speedReaderStyle = {
