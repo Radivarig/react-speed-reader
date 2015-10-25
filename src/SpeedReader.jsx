@@ -17,11 +17,13 @@ var SpeedReader = React.createClass({
   }
 , getInitialState: function() {
     var words = this.getWords(this.props.inputText)
-    return {
+    var currentText = words.slice(0, this.props.chunk).join(' ')
+
+    return Object.assign(this.getWordParts(currentText), {
       current: 0
     , words: words
-    , currentText: words.slice(0, this.props.chunk).join(' ')
-    }
+    , currentText: currentText
+    })
   }
 , componentWillReceiveProps: function(nextProps) {
     if (!this.props.isPlaying && nextProps.isPlaying)
@@ -73,6 +75,15 @@ var SpeedReader = React.createClass({
 , offset: 0
 , blank: 0
 , lastLoopId: undefined
+, getWordParts: function(currentText) {
+    var word = currentText.split('')
+    var pivot = this.pivot(currentText)
+    return {
+      pre: word.slice(0, pivot)
+    , mid: word[pivot]
+    , post: word.slice(pivot +1)
+    }
+  }
 , loop: function(opts={}) {
     var self = this
     var ms = opts.skip ? 0 : 60000/this.props.speed
@@ -115,10 +126,10 @@ var SpeedReader = React.createClass({
       if (self.props.blank && self.props.blank.regex.test(currentText))
         self.blank = (self.props.blank.duration || 1)*ms
 
-      self.setState({
+      self.setState(Object.assign(self.getWordParts(currentText), {
         currentText: currentText
       , current: opts.skip ? self.state.current: current
-      })
+      }))
 
       currentStart += chunk
 
@@ -151,18 +162,11 @@ var SpeedReader = React.createClass({
       , textAlign: 'right'
       }
 
-      var pivot = this.pivot(this.state.currentText)
-      var word = this.state.currentText.split('')
-
-      var pre = word.slice(0, pivot)
-      var mid = word[pivot]
-      var post = word.slice(pivot +1)
-
       text =
         <div>
-          <span style={fixedLeft}>{pre}</span>
-          <span style={{color: this.props.pivotColor}}>{mid}</span>
-          <span style={{position: 'absolute'}}>{post}</span>
+          <span style={fixedLeft}>{this.state.pre}</span>
+          <span style={{color: this.props.pivotColor}}>{this.state.mid}</span>
+          <span style={{position: 'absolute'}}>{this.state.post}</span>
         </div>
     }
 
@@ -180,4 +184,3 @@ var SpeedReader = React.createClass({
 })
 
 module.exports = SpeedReader
-
