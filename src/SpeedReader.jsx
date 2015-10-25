@@ -144,7 +144,7 @@ var SpeedReader = React.createClass({
         , of: wordsCount || 1
         })
 
-      if(currentStart < l) {
+      if(currentStart < wordsCount) {
         if ( !opts.skip || opts.skipFor) self.loop()
       }
       else {
