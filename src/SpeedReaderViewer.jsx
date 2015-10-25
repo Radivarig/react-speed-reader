@@ -95,31 +95,51 @@ var SpeedReaderViewer = React.createClass({
   }
 , render: function() {
     var self = this
-    var outputTextAreaStyle = {
-      textAlign: 'center'
-    , fontSize: '200%'
+
+    var outerStyle = {
+      display: 'inline-block'
     , height: 150
+    , width: 300
+    }
+
+    var frameStyle = {
+      border: 'solid'
+    , borderWidth: 1
+    , borderLeftStyle: 'none'
+    , borderRightStyle: 'none'
+    , position: 'relative'
+    , top: '50%'
+    , transform: 'translateY(-50%)'
+    }
+
+    var speedReaderStyle = {
+      transform: 'translate(' +(this.state.chunk == 1 ? -10 : 0) +'%)'
+    , fontSize: '200%'
     }
 
     var progressBar = this.progressBar(this.state.progress)
     return (
       <div style={{textAlign: 'center'}}>
-        <div style={outputTextAreaStyle}>
-          <SpeedReader
-            inputText={this.state.inputText}
-            speed={this.state.speed || this.getInitialState().speed}
-            isPlaying={this.state.isPlaying}
-            setProgress={this.state.setProgress}
-            hasEndedCallback={this.pause}
-            progressCallback={this.progress}
-            wordPartsCallback={undefined/*function(parts){console.log(parts)}*/}
-            pivotColor={undefined/*defaults to red*/}
-            chunk={this.state.chunk}
-            reset={this.state.resetTs}
-            trim={{regex: /\.|,|\?|!/}}
-            offset={{regex: /\.|,|\?|!/, duration: 0.5}}
-            blank={{regex: /\.|\?|!/, duration: 0.5}}
-            />
+        <div style={outerStyle}>
+          <div style={frameStyle}>
+            <div style={speedReaderStyle}>
+              <SpeedReader
+                inputText={this.state.inputText}
+                speed={this.state.speed || this.getInitialState().speed}
+                isPlaying={this.state.isPlaying}
+                setProgress={this.state.setProgress}
+                hasEndedCallback={this.pause}
+                progressCallback={this.progress}
+                wordPartsCallback={undefined/*function(parts){console.log(parts)}*/}
+                pivotColor={undefined/*defaults to red*/}
+                chunk={this.state.chunk}
+                reset={this.state.resetTs}
+                trim={{regex: /\.|,|\?|!/}}
+                offset={{regex: /\.|,|\?|!/, duration: 0.5}}
+                blank={{regex: /\.|\?|!/, duration: 0.5}}
+                />
+            </div>
+          </div>
         </div>
 
         <div>
@@ -150,7 +170,7 @@ var SpeedReaderViewer = React.createClass({
           WPM
         </div>
 
-        <textarea rows={10} cols={40}
+        <textarea rows={10} cols={35}
           type="text"
           value={this.state.inputText}
           onChange={this.setInputText}

@@ -152,8 +152,13 @@ var SpeedReader = React.createClass({
     return (x.length != 1) ? Math.floor(x.length/7 +1) : 0
   }
 , render: function() {
-    var text = this.state.currentText
-
+    var currentText = this.state.currentText
+    if (this.props.wordPartsCallback)
+      this.props.wordPartsCallback(
+        this.props.chunk == 1 ?
+          currentText : this.getWordParts(currentText)
+      )
+    var text = <span>{currentText}</span>
     if (this.props.chunk == 1) {
       var fixedLeft = {
         position: 'absolute'
@@ -161,30 +166,15 @@ var SpeedReader = React.createClass({
       , transform: 'translate(-100%)'
       , textAlign: 'right'
       }
-
-      text =
+      text = (
         <span>
           <span style={fixedLeft}>{this.state.pre}</span>
           <span style={{color: this.props.pivotColor}}>{this.state.mid}</span>
           <span style={{position: 'absolute'}}>{this.state.post}</span>
         </span>
-    }
-
-    var styleCenter = {
-      position: 'relative'
-    , top: '50%'
-    , transform: 'translateY(-50%)'
-    }
-
-    if(this.props.wordPartsCallback)
-      this.props.wordPartsCallback(
-        typeof(text) == 'string' ?
-          text : this.getWordParts(this.state.currentText)
       )
-
-    return (
-      <div style={styleCenter}>{text}</div>
-    )
+    }
+    return text
   }
 
 })
