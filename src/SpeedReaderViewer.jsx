@@ -71,7 +71,7 @@ var SpeedReaderViewer = React.createClass({
     this.setState({setProgress: setProgress})
   }
 , progressBar: function(progress) {
-    var chunks = 10
+    var chunks = 25
     var ratio = progress ? progress.at/progress.of : 0
     var integerPart = Math.floor(ratio *chunks)
     var progressBar = new Array(integerPart +1).join('#')
@@ -143,7 +143,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <span onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
+          <span style={{cursor: 'col-resize'}} onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
           <span style={{position: 'absolute', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
