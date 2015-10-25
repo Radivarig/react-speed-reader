@@ -163,11 +163,11 @@ var SpeedReader = React.createClass({
       }
 
       text =
-        <div>
+        <span>
           <span style={fixedLeft}>{this.state.pre}</span>
           <span style={{color: this.props.pivotColor}}>{this.state.mid}</span>
           <span style={{position: 'absolute'}}>{this.state.post}</span>
-        </div>
+        </span>
     }
 
     var styleCenter = {
