@@ -161,6 +161,9 @@ var SpeedReader = React.createClass({
         this.props.chunk == 1 ?
           currentText : this.getWordParts(currentText)
       )
+    if (currentText === '')
+      return <span>&nbsp;</span>
+
     var text = <span>{currentText}</span>
     if (this.props.chunk == 1) {
       var fixedLeft = {
