@@ -128,7 +128,7 @@ var SpeedReader = React.createClass({
 
       self.setState(Object.assign(self.getWordParts(currentText), {
         currentText: currentText
-      , current: opts.skip ? self.state.current: current
+      , current: opts.skip ? self.state.current : current
       }))
 
       currentStart += chunk
@@ -175,6 +175,12 @@ var SpeedReader = React.createClass({
     , top: '50%'
     , transform: 'translateY(-50%)'
     }
+
+    if(this.props.wordPartsCallback)
+      this.props.wordPartsCallback(
+        typeof(text) == 'string' ?
+          text : this.getWordParts(this.state.currentText)
+      )
 
     return (
       <div style={styleCenter}>{text}</div>

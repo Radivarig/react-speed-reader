@@ -96,11 +96,14 @@ var SpeedReaderViewer = React.createClass({
             setProgress={this.state.setProgress}
             hasEndedCallback={this.pause}
             progressCallback={this.progress}
+            wordPartsCallback={undefined/*function(parts){console.log(parts)}*/}
+            pivotColor={undefined/*defaults to red*/}
             chunk={this.state.chunk}
             reset={this.state.resetTs}
             trim={{regex: /\.|,|\?|!/}}
             offset={{regex: /\.|,|\?|!/, duration: 0.5}}
             blank={{regex: /\.|\?|!/, duration: 0.5}}
+
             />
         </div>
 
