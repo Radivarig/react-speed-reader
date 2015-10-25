@@ -65,7 +65,8 @@ var SpeedReader = React.createClass({
     this.offset = 0
     this.blank = 0
     this.loop({
-      skip: setProgress.skipFor === undefined
+      skip: true
+    , skipFor: setProgress.skipFor !== undefined
     , skipPercent: percent == 0 || current == 0
     })
   }
@@ -92,7 +93,7 @@ var SpeedReader = React.createClass({
     var ms = opts.skip ? 0 : 60000/this.props.speed
     clearTimeout(this.lastLoopId)
     this.lastLoopId = this.setTimeout(function() {
-      if( !opts.skip && !self.props.isPlaying ) return
+      if( !opts.skip &&!opts.skipFor && !self.props.isPlaying ) return
 
       if (self.blank) {
         self.setState({currentText: '', pre: '', mid: '', post: ''})
@@ -144,7 +145,7 @@ var SpeedReader = React.createClass({
         })
 
       if(currentStart < l) {
-        if ( !opts.skip ) self.loop()
+        if ( !opts.skip || opts.skipFor) self.loop()
       }
       else {
         if (self.props.hasEndedCallback)
