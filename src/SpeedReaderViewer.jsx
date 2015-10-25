@@ -88,6 +88,8 @@ var SpeedReaderViewer = React.createClass({
     document.addEventListener('keydown', this.handleShortcuts)
   }
 , handleShortcuts: function(e) {
+    if (document.activeElement.tagName !== 'BODY') return
+
     var skipFor = 3
     var chgSpeed = 10
 
