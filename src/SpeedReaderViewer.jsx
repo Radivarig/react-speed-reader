@@ -122,7 +122,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <span onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
+          <span style={{userSelect: 'none'}} onMouseDown={this.setDragTarget(true)}>{progressBar.bar}</span>
           <span style={{position: 'absolute', display: 'inline-block', width: '40', textAlign: 'right'}}>{progressBar.percent}</span>
         </div>
 
