@@ -13,13 +13,13 @@ var SpeedReaderViewer = React.createClass({
     , setProgress: {timestamp: undefined}
     }
   }
-, play: function() {
-    this.setState({isPlaying: true})
-  }
-, pause: function() {
-    this.setState({isPlaying: false})
+, toggleIsPlaying: function() {
+    document.activeElement.blur()
+    var isPlaying = this.state.isPlaying
+    this.setState({isPlaying: !isPlaying })
   }
 , reset: function() {
+    document.activeElement.blur()
     this.setState({
       isPlaying: false
     , resetTs: new Date().getTime()
@@ -40,6 +40,7 @@ var SpeedReaderViewer = React.createClass({
     this.setState({speed: parseInt(v || 0)}, this.reset)
   }
 , alterChunk: function(x) {
+    document.activeElement.blur()
     var chunk = this.clamp(this.state.chunk +x, 1, 3)
     this.setState({chunk: chunk}, this.reset)
   }
@@ -177,9 +178,7 @@ var SpeedReaderViewer = React.createClass({
         </div>
 
         <div>
-          <button onClick={this.state.isPlaying ?this.pause : this.play}>
-            {this.state.isPlaying ? 'Pause' : 'Play'}
-          </button>
+          <button onClick={this.toggleIsPlaying}>{this.state.isPlaying ? 'Pause' : 'Play'}</button>
           <button onClick={this.reset}>Reset</button>
         </div>
 
