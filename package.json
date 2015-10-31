@@ -24,6 +24,7 @@
     "react-dom": "^0.13.3"
   },
   "dependencies": {
+    "jsx-loader": "^0.13.2",
     "react-timer-mixin": "^0.13.3"
   }
 }
