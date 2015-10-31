@@ -2,7 +2,7 @@
   "name": "react-speed-reader",
   "version": "1.0.0",
   "description": "Speed Reader component for React",
-  "main": "./src/entry.js",
+  "main": "./src/exports.js",
   "scripts": {
     "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --port 9999"
   },
