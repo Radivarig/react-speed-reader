@@ -6,7 +6,7 @@
 
 `npm install react-speed-reader` (peer dependencies: `react react-dom`)
 
-for React **v0.13.3** `npm install react-speed-reader@1.0.0`
+for React **v0.13.3** `npm install react-speed-reader@1.0.2`
 
 ### Demo
 

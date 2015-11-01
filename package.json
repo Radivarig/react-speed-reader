@@ -1,6 +1,6 @@
 {
   "name": "react-speed-reader",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Speed Reader component for React",
   "main": "./exports.js",
   "scripts": {
