@@ -18,8 +18,9 @@ var SpeedReaderViewer = React.createClass({
     var isPlaying = this.state.isPlaying
     this.setState({isPlaying: !isPlaying })
   }
-, reset: function() {
-    document.activeElement.blur()
+, reset: function(opts) {
+    if ( !(opts || {}).skipBlur )
+      document.activeElement.blur()
     this.setState({
       isPlaying: false
     , resetTs: new Date().getTime()
@@ -32,7 +33,9 @@ var SpeedReaderViewer = React.createClass({
     this.alterChunk(-1)
   }
 , setInputText: function(e) {
-    this.setState({inputText: e.target.value}, this.reset)
+    var self = this
+    this.setState({inputText: e.target.value},
+      function(){self.reset({skipBlur: true})})
   }
 , setSpeed: function(e) {
     var v = e.target ? e.target.value : e
