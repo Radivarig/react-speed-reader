@@ -4,7 +4,7 @@
   "description": "Speed Reader component for React",
   "main": "./src/exports.js",
   "scripts": {
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors --port 9999"
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors"
   },
   "author": "Reslav Hollos",
   "devDependencies": {
