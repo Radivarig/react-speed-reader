@@ -88,7 +88,8 @@ var SpeedReader = React.createClass({
     , post: word.slice(pivot +1)
     }
   }
-, loop: function(opts={}) {
+, loop: function(opts) {
+    opts = opts || {}
     var self = this
     var ms = opts.skip ? 0 : 60000/this.props.speed
     clearTimeout(this.lastLoopId)
