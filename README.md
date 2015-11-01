@@ -1,5 +1,7 @@
 # react-speed-reader
 
+Try it - [Live Example](https://radivarig.github.io/#/react-speed-reader)
+
 ![](http://i.imgur.com/M8Aw9Gh.gif)
 
 ### Install
