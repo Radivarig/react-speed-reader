@@ -15,15 +15,14 @@
     "flowcheck": "^0.2.7",
     "flowcheck-loader": "^1.0.0",
     "history": "^1.13.0",
-    "react-dom": "^0.14.1",
     "react-router": "^1.0.0-rc3",
     "style-loader": "^0.12.4",
     "webpack": "^1.8.11",
     "webpack-dev-server": "^1.8.2"
   },
   "peerDependencies": {
-    "react": "^0.14.1",
-    "react-dom": "^0.13.3"
+    "react": "^0.14.x",
+    "react-dom": "^0.14.x"
   },
   "dependencies": {
     "jsx-loader": "^0.13.2",
