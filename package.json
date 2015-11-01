@@ -2,11 +2,23 @@
   "name": "react-speed-reader",
   "version": "1.0.3",
   "description": "Speed Reader component for React",
+  "author": "Reslav Hollos <reslav.hollos@gmail.com> (https://twitter.com/Radivarig)",
+  "license": "MIT",
   "main": "./exports.js",
   "scripts": {
     "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors"
   },
-  "author": "Reslav Hollos <reslav.hollos@gmail.com> (https://twitter.com/Radivarig)",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Radivarig/react-popups.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-component",
+    "speed reader",
+    "reading"
+  ],
   "devDependencies": {
     "babel": "^5.8.23",
     "babel-loader": "^5.3.2",
