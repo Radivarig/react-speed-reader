@@ -125,6 +125,27 @@ var SpeedReaderViewer = React.createClass({
     this.dragTarget = e.target
     this.setProgressPercent(e)
   }
+, renderReader: function(props, state) {
+    if ( !state.currentText )
+      return <span>&nbsp;</span>
+
+    if (props.chunk > 1)
+      return <span>{state.currentText}</span>
+
+    var fixedLeft = {
+      position: 'absolute'
+    , display: 'inline-block'
+    , transform: 'translate(-100%)'
+    , textAlign: 'right'
+    }
+    return (
+      <span>
+        <span style={fixedLeft}>{state.pre}</span>
+        <span style={{color: 'red'}}>{state.mid}</span>
+        <span style={{position: 'absolute'}}>{state.post}</span>
+      </span>
+    )
+  }
 , render: function() {
     var self = this
 
@@ -157,14 +178,13 @@ var SpeedReaderViewer = React.createClass({
           <div style={frameStyle}>
             <div style={speedReaderStyle}>
               <SpeedReader
+                renderReader={this.renderReader/*(props, state)=>reactElement*/}
                 inputText={this.state.inputText}
                 speed={this.state.speed || this.getInitialState().speed}
                 isPlaying={this.state.isPlaying}
                 setProgress={this.state.setProgress}
                 hasEndedCallback={this.pause}
                 progressCallback={this.progress}
-                wordPartsCallback={undefined/*function(parts){console.log(parts)}*/}
-                pivotColor={undefined/*defaults to red*/}
                 chunk={this.state.chunk}
                 reset={this.state.resetTs}
                 trim={{regex: /\.|,|\?|!/}}
@@ -219,4 +239,3 @@ var SpeedReaderViewer = React.createClass({
 })
 
 module.exports = SpeedReaderViewer
- 

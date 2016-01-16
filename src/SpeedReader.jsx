@@ -5,6 +5,7 @@ var SpeedReader = React.createClass({
   mixins: [ TimerMixin ]
 , propTypes: {
     inputText: React.PropTypes.string.isRequired
+  , renderReader: React.PropTypes.func.isRequired
   , isPlaying: React.PropTypes.bool.isRequired
   , speed: React.PropTypes.number.isRequired
   , chunk: React.PropTypes.number
@@ -12,7 +13,6 @@ var SpeedReader = React.createClass({
 , getDefaultProps: function() {
     return {
       chunk: 1
-    , pivotColor: 'red'
     }
   }
 , getInitialState: function() {
@@ -158,32 +158,7 @@ var SpeedReader = React.createClass({
     return (x.length != 1) ? Math.floor(x.length/7 +1) : 0
   }
 , render: function() {
-    var currentText = this.state.currentText
-    if (this.props.wordPartsCallback)
-      this.props.wordPartsCallback(
-        this.props.chunk == 1 ?
-          currentText : this.getWordParts(currentText)
-      )
-    if (currentText === '')
-      return <span>&nbsp;</span>
-
-    var text = <span>{currentText}</span>
-    if (this.props.chunk == 1) {
-      var fixedLeft = {
-        position: 'absolute'
-      , display: 'inline-block'
-      , transform: 'translate(-100%)'
-      , textAlign: 'right'
-      }
-      text = (
-        <span>
-          <span style={fixedLeft}>{this.state.pre}</span>
-          <span style={{color: this.props.pivotColor}}>{this.state.mid}</span>
-          <span style={{position: 'absolute'}}>{this.state.post}</span>
-        </span>
-      )
-    }
-    return text
+    return this.props.renderReader(this.props, this.state)
   }
 
 })
