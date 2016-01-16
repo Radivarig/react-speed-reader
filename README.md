@@ -20,24 +20,51 @@ npm run dev
 ```
 open `localhost:8080`
 
+### Updates
+
+(**1.1**): (**breaking**) function **renderReader** _(props, state)=>ReactElement_ is required in props of the reader
+
 ### Features
 
-- **flash** one or more words
+- **flash** one or _more_ words
 - on **one** word flash, show highlighted **pivot** letter (the **red** focus)
 - set words per minute (**WPM**)
 - **pause** after character match
 - **trim** sentence after character match
 - show **blank** after character match
 - TODO: multiple rows
-- TODO: trim by row length*
+- TODO: trim by row length
 
 ### Basic Usage
 
 Check the [Example GUI](https://github.com/Radivarig/react-speed-reader/blob/master/src/SpeedReaderViewer.jsx) for full demonstration.
 ```javascript
 // ...
+  renderReader(props, state) {
+    if ( !state.currentText )
+      return <span>&nbsp;</span>  //keep lineHeight
+
+    if (props.chunk > 1)
+      return <span>{state.currentText}</span>
+
+    var fixedLeft = {
+      position: 'absolute'
+    , display: 'inline-block'
+    , transform: 'translate(-100%)'
+    , textAlign: 'right'
+    }
+    return (
+      <span>
+        <span style={fixedLeft}>{state.pre}</span>
+        <span style={{color: 'red'}}>{state.mid}</span>
+        <span style={{position: 'absolute'}}>{state.post}</span>
+      </span>
+    )
+  }
+// ...
     <SpeedReader
         inputText={'Something to read'}
+        renderReader={this.renderReader/*above*/}
         speed={250}
         isPlaying={True}
     
@@ -48,13 +75,11 @@ Check the [Example GUI](https://github.com/Radivarig/react-speed-reader/blob/mas
         blank={{regex: /\.|\?|!/, duration: 0.5} /*show blank*/}
 
         chunk={1/*number of words per flash*/}
-        pivotColor={'red'}
-        reset={{/*resets when changed*/}}
+        reset={{/*resets when changed, use timestamp new Date().getTime()*/}}
         setProgress={{/*{ skipFor: Int OR percent: 0 to 1, timestamp: new Date().getTime() }*/}}
 
         hasEndedCallback={{/*call your pause fn to sync with GUI*/}}
         progressCallback={{/*calls with {at: Int, of: Int}*/}}
-        wordPartsCallback={{/*if chunk is 1 calls with {pre: 'w', mid: 'o', post: 'rd'} else a String*/}}
         />
 ```
 
