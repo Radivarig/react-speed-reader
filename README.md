@@ -6,9 +6,7 @@ Try it - [Live Example](https://radivarig.github.io/#/react-speed-reader)
 
 ### Install
 
-`npm install react-speed-reader` (peer dependencies: `react react-dom`)
-
-for React **v0.13.3** `npm install react-speed-reader@1.0.3`
+`npm install react-speed-reader`
 
 ### Demo
 
@@ -16,9 +14,8 @@ Check out [Live Example](https://radivarig.github.io/#/react-speed-reader) and t
 ```bash
 git clone git@github.com:Radivarig/react-speed-reader.git
 npm install
-npm run dev 
+npm start
 ```
-open `localhost:8080`
 
 ### Updates
 

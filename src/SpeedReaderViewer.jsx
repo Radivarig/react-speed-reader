@@ -1,9 +1,8 @@
-var React = require('react')
+import React from 'react'
+import SpeedReader from './SpeedReader.jsx'
 
-var SpeedReader = require('./SpeedReader.jsx')
-
-var SpeedReaderViewer = React.createClass({
-  getInitialState: function() {
+class SpeedReaderViewer extends React.Component {
+  _getInitialState = () => {
     return {
       inputText: 'Science, what is it all about?\nTechmology, what is that all about?\nIs it good?\nIs it wacked?\nIs it good, is it wacked?\nWhat is it all about?\n'
     , isPlaying: false
@@ -13,12 +12,16 @@ var SpeedReaderViewer = React.createClass({
     , setProgress: {timestamp: undefined}
     }
   }
-, toggleIsPlaying: function() {
+
+  state = this._getInitialState()
+
+  toggleIsPlaying = () => {
     document.activeElement.blur()
     var isPlaying = this.state.isPlaying
     this.setState({isPlaying: !isPlaying })
   }
-, reset: function(opts) {
+
+  reset = (opts) => {
     if ( !(opts || {}).skipBlur )
       document.activeElement.blur()
     this.setState({
@@ -26,37 +29,46 @@ var SpeedReaderViewer = React.createClass({
     , resetTs: new Date().getTime()
     })
   }
-, increaseChunk: function() {
+
+  increaseChunk = () => {
     this.alterChunk(1)
   }
-, decreaseChunk: function() {
+
+  decreaseChunk = () => {
     this.alterChunk(-1)
   }
-, setInputText: function(e) {
+
+  setInputText = (e) => {
     var self = this
     this.setState({inputText: e.target.value},
       function(){self.reset({skipBlur: true})})
   }
-, setSpeed: function(e) {
+
+  setSpeed = (e) => {
     var v = e.target ? e.target.value : e
     if(isNaN(v) || v < 0) return
     this.setState({speed: parseInt(v || 0)}, ()=>this.reset ({skipBlur:true}))
   }
-, alterChunk: function(x) {
+
+  alterChunk = (x) => {
     document.activeElement.blur()
     var chunk = this.clamp(this.state.chunk +x, 1, 3)
     this.setState({chunk: chunk}, this.reset)
   }
-, clamp: function(x, min, max) {
+
+  clamp = (x, min, max) => {
     if(x < min) return min
     if(x > max) return max
     return x
   }
-, progress: function(x) {
+
+  progress = (x) => {
     this.setState({progress: x})
   }
-, dragTarget: undefined
-, setProgressPercent: function(e) {
+
+  dragTarget: undefined
+
+  setProgressPercent = (e) => {
     if (this.dragTarget) {
       window.getSelection().removeAllRanges()
       var rect = this.dragTarget.getBoundingClientRect()
@@ -68,14 +80,16 @@ var SpeedReaderViewer = React.createClass({
       this.setState({setProgress: setProgress})
     }
   }
-, setProgressSkipFor: function(x) {
+
+  setProgressSkipFor = (x) => {
     var setProgress = {
       skipFor: x
     , timestamp: new Date().getTime()
     }
     this.setState({setProgress: setProgress})
   }
-, progressBar: function(progress) {
+
+  progressBar = (progress) => {
     var chunks = 25
     var ratio = progress ? progress.at/progress.of : 0
     var integerPart = Math.floor(ratio *chunks)
@@ -86,17 +100,20 @@ var SpeedReaderViewer = React.createClass({
     , percent: (ratio*100).toFixed(0) +'%'
     }
   }
-, componentDidMount: function() {
+
+  componentDidMount = () => {
     document.addEventListener('mousemove', this.setProgressPercent)
     document.addEventListener('click', this.removeDragTarget)
     document.addEventListener('keydown', this.handleShortcuts)
   }
-, componentWillUnmount: function() {
+
+  componentWillUnmount = () => {
     document.removeEventListener('mousemove', this.setProgressPercent)
     document.removeEventListener('click', this.removeDragTarget)
     document.removeEventListener('keydown', this.handleShortcuts)
   }
-, handleShortcuts: function(e) {
+
+  handleShortcuts = (e) => {
     if (document.activeElement.tagName !== 'BODY') return
 
     var skipFor = 3
@@ -118,14 +135,17 @@ var SpeedReaderViewer = React.createClass({
     if(e.keyCode == '40')   //down
       this.setSpeed(this.state.speed -chgSpeed)
   }
-, removeDragTarget: function() {
+
+  removeDragTarget = () => {
     this.dragTarget = undefined
   }
-, setDragTarget: function(e) {
+
+  setDragTarget = (e) => {
     this.dragTarget = e.target
     this.setProgressPercent(e)
   }
-, renderReader: function(props, state) {
+
+  renderReader = (props, state) => {
     if ( !state.currentText )
       return <span>&nbsp;</span>
 
@@ -146,7 +166,8 @@ var SpeedReaderViewer = React.createClass({
       </span>
     )
   }
-, render: function() {
+
+  render = () => {
     var self = this
 
     var outerStyle = {
@@ -180,7 +201,7 @@ var SpeedReaderViewer = React.createClass({
               <SpeedReader
                 renderReader={this.renderReader/*(props, state)=>reactElement*/}
                 inputText={this.state.inputText}
-                speed={this.state.speed || this.getInitialState().speed}
+                speed={this.state.speed || this._getInitialState().speed}
                 isPlaying={this.state.isPlaying}
                 setProgress={this.state.setProgress}
                 hasEndedCallback={this.pause}
@@ -215,7 +236,7 @@ var SpeedReaderViewer = React.createClass({
           <input
             style={{width: 50, textAlign: 'center'}}
             value={this.state.speed || ''}
-            placeholder={this.getInitialState().speed}
+            placeholder={this._getInitialState().speed}
             onChange={this.setSpeed}
             />
           WPM
@@ -236,6 +257,6 @@ var SpeedReaderViewer = React.createClass({
       </div>
     )
   }
-})
+}
 
-module.exports = SpeedReaderViewer
+export default SpeedReaderViewer

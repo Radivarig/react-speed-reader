@@ -1,23 +1,28 @@
-var React = require('react')
-var TimerMixin = require('react-timer-mixin')
+import React from 'react'
+import PropTypes from 'prop-types'
 
-var SpeedReader = React.createClass({
-  mixins: [ TimerMixin ]
-, propTypes: {
-    inputText: React.PropTypes.string.isRequired
-  , renderReader: React.PropTypes.func.isRequired
-  , isPlaying: React.PropTypes.bool.isRequired
-  , speed: React.PropTypes.number.isRequired
-  , chunk: React.PropTypes.number
+class SpeedReader extends React.Component {
+  static propTypes = {
+    inputText: PropTypes.string.isRequired,
+    renderReader: PropTypes.func.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    speed: PropTypes.number.isRequired,
+    chunk: PropTypes.number,
   }
-, getDefaultProps: function() {
-    return {
-      chunk: 1
-    }
+
+  static defaultProps = {
+    chunk: 1,
   }
-, getInitialState: function() {
-    var words = this.getWords(this.props.inputText)
-    var currentText = words.slice(0, this.props.chunk).join(' ')
+
+  constructor (props) {
+    super (props)
+
+    this.state = this.getDefaultState (props)
+  }
+
+  getDefaultState = (props) => {
+    var words = this.getWords(props.inputText)
+    var currentText = words.slice(0, props.chunk).join(' ')
 
     return Object.assign(this.getWordParts(currentText), {
       current: 0
@@ -25,7 +30,8 @@ var SpeedReader = React.createClass({
     , currentText: currentText
     })
   }
-, componentWillReceiveProps: function(nextProps) {
+
+  componentWillReceiveProps = (nextProps) => {
     if (!this.props.isPlaying && nextProps.isPlaying)
       this.loop()
 
@@ -35,7 +41,7 @@ var SpeedReader = React.createClass({
       this.handleSetProgress(nextProps.setProgress)
 
     if(this.props.reset !== nextProps.reset) {
-      this.setState(this.getInitialState)
+      this.setState(this.getDefaultState(nextProps))
 
       if (this.props.progressCallback)
         this.props.progressCallback({
@@ -46,7 +52,8 @@ var SpeedReader = React.createClass({
       this.loop()
     }
   }
-, handleSetProgress: function(setProgress) {
+
+  handleSetProgress = (setProgress) => {
     var l = this.state.words.length -1
     if (setProgress.skipFor) {
       var current = this.state.current +setProgress.skipFor
@@ -70,16 +77,22 @@ var SpeedReader = React.createClass({
     , skipPercent: percent == 0 || current == 0
     })
   }
-, getWords: function(sentence) {
+
+  getWords = (sentence) => {
     return sentence.split(/\s+/).filter(Boolean)
   }
-, componentDidMount: function() {
+
+  componentDidMount = () => {
     this.loop()
   }
-, offset: 0
-, blank: 0
-, lastLoopId: undefined
-, getWordParts: function(currentText) {
+
+  offset: 0
+
+  blank: 0
+
+  lastLoopId: undefined
+
+  getWordParts = (currentText) => {
     var word = currentText.split('')
     var pivot = this.pivot(currentText)
     return {
@@ -88,12 +101,13 @@ var SpeedReader = React.createClass({
     , post: word.slice(pivot +1)
     }
   }
-, loop: function(opts) {
+
+  loop = (opts) => {
     opts = opts || {}
     var self = this
     var ms = opts.skip ? 0 : 60000/this.props.speed
     clearTimeout(this.lastLoopId)
-    this.lastLoopId = this.setTimeout(function() {
+    this.lastLoopId = setTimeout(function() {
       if( !opts.skip &&!opts.skipFor && !self.props.isPlaying ) return
 
       if (self.blank) {
@@ -154,13 +168,15 @@ var SpeedReader = React.createClass({
       }
     }, ms +this.offset)
   }
-, pivot: function(x) {
+
+  pivot = (x) => {
     return (x.length != 1) ? Math.floor(x.length/7 +1) : 0
   }
-, render: function() {
+
+  render = () => {
     return this.props.renderReader(this.props, this.state)
   }
 
-})
+}
 
-module.exports = SpeedReader
+export default SpeedReader
