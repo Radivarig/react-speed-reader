@@ -2,7 +2,7 @@ import React from 'react'
 import SpeedReader from './SpeedReader.jsx'
 
 class SpeedReaderViewer extends React.Component {
-  _getInitialState = () => {
+  getDefaultState = (props) => {
     return {
       inputText: 'Science, what is it all about?\nTechmology, what is that all about?\nIs it good?\nIs it wacked?\nIs it good, is it wacked?\nWhat is it all about?\n'
     , isPlaying: false
@@ -13,7 +13,7 @@ class SpeedReaderViewer extends React.Component {
     }
   }
 
-  state = this._getInitialState()
+  state = this.getDefaultState()
 
   toggleIsPlaying = () => {
     document.activeElement.blur()
@@ -201,7 +201,7 @@ class SpeedReaderViewer extends React.Component {
               <SpeedReader
                 renderReader={this.renderReader/*(props, state)=>reactElement*/}
                 inputText={this.state.inputText}
-                speed={this.state.speed || this._getInitialState().speed}
+                speed={this.state.speed || this.getDefaultState().speed}
                 isPlaying={this.state.isPlaying}
                 setProgress={this.state.setProgress}
                 hasEndedCallback={this.pause}
@@ -236,7 +236,7 @@ class SpeedReaderViewer extends React.Component {
           <input
             style={{width: 50, textAlign: 'center'}}
             value={this.state.speed || ''}
-            placeholder={this._getInitialState().speed}
+            placeholder={this.getDefaultState().speed}
             onChange={this.setSpeed}
             />
           WPM
