@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./dist/main.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --mode development ./src/viewer.js --open",
     "build": "webpack --mode production"
   },
   "repository": {

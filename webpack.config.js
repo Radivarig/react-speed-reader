@@ -3,7 +3,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin")
 module.exports = {
   entry: {
     main: __dirname + "/src/SpeedReader.jsx",
-    viewer: __dirname + "/src/index.js",
   },
 
   output: {
