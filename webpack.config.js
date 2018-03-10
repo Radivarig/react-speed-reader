@@ -1,16 +1,22 @@
+const path = require('path')
+const packageJson = require(path.resolve(__dirname, "package.json"))
 const HtmlWebPackPlugin = require("html-webpack-plugin")
+
+const mainFile = "SpeedReader.jsx"
 
 module.exports = {
   entry: {
-    main: __dirname + "/src/SpeedReader.jsx",
+    main: path.resolve(__dirname, "src", mainFile),
   },
 
   output: {
     filename: "[name].js",
-    path: __dirname + "/dist",
-    library: "react-speed-reader",
+    library: mainFile.substring (0, mainFile.indexOf(".")),
     libraryTarget: "umd",
   },
+
+  externals: process.env.NODE_ENV == "development" ? [] :
+    Object.keys(packageJson.peerDependencies),
 
   devtool: "source-map",
 
@@ -21,7 +27,7 @@ module.exports = {
         exclude: [/node_modules/],
         use: {
           loader: "babel-loader",
-        }
+        },
       },
       {
         test: /\.html$/,
@@ -29,16 +35,15 @@ module.exports = {
           {
             loader: "html-loader",
             options: { minimize: true },
-          }
-        ]
+          },
+        ],
       },
     ],
   },
 
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html",
+      template: path.resolve (__dirname, "src", "index.html"),
     })
   ],
 }
