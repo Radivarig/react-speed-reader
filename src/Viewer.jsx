@@ -44,7 +44,7 @@ class SpeedReaderViewer extends React.Component {
   setSpeed = (e) => {
     const v = e.target ? e.target.value : e
     if(isNaN (v) || v < 0) return
-    this.setState ({ "speed": parseInt (v || 0) }, () => this.reset ({ "skipBlur": true }))
+    this.setState ({ "speed": parseInt (v || 0) })
   }
 
   alterChunk = (x) => {
