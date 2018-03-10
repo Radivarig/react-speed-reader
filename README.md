@@ -14,7 +14,7 @@ Check out [Live Example](https://radivarig.github.io/#/react-speed-reader) and t
 ```bash
 git clone git@github.com:Radivarig/react-speed-reader.git
 npm install
-npm start
+npm run dev
 ```
 
 ### Updates
